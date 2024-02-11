@@ -41,4 +41,20 @@ class ProductGateway
         return $this->conn->lastInsertId();
 
     }
+
+    public function get(string $id): array | false
+    {
+        $sql = "SELECT * FROM product
+                WHERE id=:id";
+        $stmt = $this->conn->prepare($sql);
+
+        $stmt->bindValue(":id", $id, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $data;
+
+    }
 }

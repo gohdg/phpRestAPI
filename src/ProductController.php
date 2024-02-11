@@ -18,7 +18,9 @@ class ProductController
 
     private function processResourceRequest(string $method, string $id): void
     {
+        $product = $this->gateway->get($id);
 
+        echo json_encode($product);
     }
 
     private function processCollectionRequest(string $method): void
@@ -47,7 +49,8 @@ class ProductController
                 break;
 
             default:
-                # code...
+                http_response_code(405); // Method Not Allowed
+                header("Allow: GET, POST");
                 break;
         }
     }
